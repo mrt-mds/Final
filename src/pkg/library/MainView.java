@@ -64,6 +64,11 @@ public class MainView {
 			});
 			JButton bookMngtBtn = new JButton("Book Management");
 			JButton penaltyBtn = new JButton("Penalty");
+			penaltyBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new Penalty();
+				}
+			});
 
 			gbc.weighty = 1;
 			add(searchTraineeBtn, gbc);
