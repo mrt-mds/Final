@@ -38,16 +38,21 @@ public abstract class References {
 		
 	}
 	
+	public boolean getAvailability(){
+		return this.isAvailable;
+	}
+	
+	public int getMaxBorrowDays(){
+		return this.maxBorrowDays;
+	}
 	
 	public String getItemType(){
 		return this.itemType;
-	}
-	
+	}	
 	
 	public String getTitle(){
 		return this.referenceTitle;
 	}
-	
 	
 	public void displayInfo(){
 		System.out.println("Ref. No.       : " + this.referenceNumber);
