@@ -30,26 +30,17 @@ public class AddEmployee extends SearchEmployee {
 
 	}
 
-	// TODO 1 Create layout
-	// TODO 2 Create 7 labels and 7 input text
-	// TODO 3 Get input text values
-	// TODO 4 Create submit button
-	// TODO 5 Call Controller add method
 	public void start() {
 		frame = new JFrame("Add Employee");
 		// Label
-		lEmpNumber = new JLabel("Employee No.   ");
+
 		lEmpType = new JLabel("Employee Type    ");
 		lEmpName = new JLabel("Name             ");
 		lEmpCnct = new JLabel("Contact No.      ");
 		lEmpBu = new JLabel("Business Unit      ");
 		lEmpPenalty = new JLabel("Total Penalty ");
 		lEmpBorrow = new JLabel("Items Borrowed ");
-
-		// text input
-		tfEmpNumber = new JTextField(10);
-		tfEmpNumber.setPreferredSize(new Dimension(150, 30));
-
+		
 		tfEmpType = new JTextField(10);
 		tfEmpType.setPreferredSize(new Dimension(150, 30));
 
@@ -73,12 +64,6 @@ public class AddEmployee extends SearchEmployee {
 		gbLayout = new GridBagLayout();
 		panel.setLayout(gbLayout);
 		gbConstraints = new GridBagConstraints();
-
-		// text field constraints
-		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.gridx = 1;
-		gbConstraints.gridy = 0;
-		panel.add(tfEmpNumber, gbConstraints);
 
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.gridx = 1;
@@ -109,12 +94,6 @@ public class AddEmployee extends SearchEmployee {
 		gbConstraints.gridx = 1;
 		gbConstraints.gridy = 6;
 		panel.add(tfBorrow, gbConstraints);
-
-		// label constraints
-		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.gridx = 0;
-		gbConstraints.gridy = 0;
-		panel.add(lEmpNumber, gbConstraints);
 
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.gridx = 0;
@@ -151,7 +130,7 @@ public class AddEmployee extends SearchEmployee {
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				strEmpNumber = tfEmpNumber.getText();
+//				strEmpNumber = tfEmpNumber.getText();
 				strEmpType = tfEmpType.getText();
 				strEmpName = tfEmpName.getText();
 				strEmpCnt = tfEmpCnt.getText();
@@ -159,7 +138,7 @@ public class AddEmployee extends SearchEmployee {
 				strEmpPenalty = tfPenalty.getText();
 				strEmpBorrow = tfBorrow.getText();
 				
-				addEmp(strEmpNumber, strEmpType, strEmpName, strEmpCnt, strEmpBU, strEmpPenalty, strEmpBorrow);
+				addEmp(strEmpType, strEmpName, strEmpCnt, strEmpBU, strEmpPenalty, strEmpBorrow);
 				
 			}
 

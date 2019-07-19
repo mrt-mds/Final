@@ -24,12 +24,13 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 
-public class SearchEmployee implements TableModelListener {
+public class SearchEmployee  {
 
 	 DefaultTableModel model;
 	JTable table;
 	JFrame frameSearchEmployee;
 	TableRowSorter sorter;
+	static int count;
 	public static ArrayList<EmployeeModel> employee = new ArrayList<EmployeeModel>();
 
 	String[] columnNames = { "Employee No.", "Employee Type", "Name", "Contact No.", "Business Unit", "Total Penalty",
@@ -53,8 +54,6 @@ public class SearchEmployee implements TableModelListener {
 				}
 			};
 			table = new JTable(model);
-			
-//			frameSearchEmployee.setDefaultCloseOperation(EX);
 	
 	}
 	
@@ -139,19 +138,11 @@ public class SearchEmployee implements TableModelListener {
 			}
 		});
 		
-		JButton btnCount = new JButton("Count Employee");
-		btnCount.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frameSearchEmployee,
-						employee.size());
-			}
-		});
 		panelSouth.add(pane, BorderLayout.SOUTH);
 		panelNorth.add(jLabel);
 		panelNorth.add(jTextField);
 		panelNorth.add(btn);
 		panelNorth.add(btnAdd);
-		panelNorth.add(btnCount);
 
 		frameSearchEmployee.add(panelSouth);
 		frameSearchEmployee.setContentPane(panelSouth);
@@ -163,15 +154,18 @@ public class SearchEmployee implements TableModelListener {
 	}
 
 
-	public void addEmp(String strEmpNumber, String strEmpType, String strEmpName, String strEmpCnt, String strEmpBU,
+	public void addEmp(String strEmpType, String strEmpName, String strEmpCnt, String strEmpBU,
 			String strEmpPenalty, String strEmpBorrow) {
-		System.out.println("Inside print addemp before try");
+		count = employee.size();
+
 		try {
 			
-			employee.add(new Trainee(Integer.parseInt(strEmpNumber), strEmpType, strEmpName, strEmpCnt, strEmpBU,
+			employee.add(new Trainee(++count, strEmpType, strEmpName, strEmpCnt, strEmpBU,
 					Integer.parseInt(strEmpPenalty), Integer.parseInt(strEmpBorrow)));
 			
-			 model = new DefaultTableModel(columnNames, 0) {
+			JOptionPane.showMessageDialog(frameSearchEmployee, "Successfully added. \nReopen window to update table.");
+			
+			model = new DefaultTableModel(columnNames, 0) {
 					public Class getColumnClass(int column) {
 						Class returnValue;
 						if ((column >= 0) && (column < getColumnCount())) {
@@ -200,26 +194,13 @@ public class SearchEmployee implements TableModelListener {
 	
 			TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 			table.setRowSorter(sorter);
-			
-			
-			System.out.println(model.getRowCount());
-			System.out.println(table.getRowCount());
-			frameSearchEmployee.setVisible(false);
+
 
 		} catch (Exception e) {
-			System.out.println("Inside print addemp inside catch");
 			e.printStackTrace();
 
 		}
 
 	}
-
-	@Override
-	public void tableChanged(TableModelEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 }
