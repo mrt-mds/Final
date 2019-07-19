@@ -1,13 +1,3 @@
-/**
- * @startDate: 07/16/2019
- * @moduleName: Reference Search and Add Reference Module
- * @moduleDescription: Defines an array that contains
- * the available references. Displays the array
- * contents. Allows the user to search for a specific
- * reference based on title match. Also includes a 
- * module for adding a new reference.
- * @author arjon.villamin
- */
 package pkg.library;
 
 import java.awt.*;

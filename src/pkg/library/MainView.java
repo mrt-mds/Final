@@ -18,6 +18,7 @@ import pkg.employee.SearchEmployee;
 
 public class MainView {
 	SearchEmployee employeeView = new SearchEmployee();
+	JButton searchTraineeBtn;
 
 	public MainView() {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -50,11 +51,16 @@ public class MainView {
 			gbc.anchor = GridBagConstraints.CENTER;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 
-			JButton searchTraineeBtn = new JButton("Search Trainee");
+			searchTraineeBtn = new JButton("Search Trainee");
+			
 			searchTraineeBtn.addActionListener(new ActionListener() {
+				
 				public void actionPerformed(ActionEvent e) {
-					employeeView.createGUI();
+					new SearchEmployee().createGUI();
+					
 				}
+				
+
 			});
 			JButton searchRefBtn = new JButton("Search Reference");
 			searchRefBtn.addActionListener(new ActionListener() {
