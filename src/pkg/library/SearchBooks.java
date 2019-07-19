@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class SearchBooks {
+import pkg.employee.EmployeeModel;
+import pkg.employee.SearchEmployee;
+
+public class SearchBooks extends SearchEmployee{
 	// initializes the reference Array
 	private static ArrayList<References> referenceArray = new ArrayList<References>();
-
+	static JComboBox<String> employeeCbox;
+	
 	public SearchBooks() {
 		createReferenceGUI();
 	}
@@ -21,20 +25,17 @@ public class SearchBooks {
 		setBorder(new EmptyBorder(200, 200, 200, 200));
 		setLayout(new GridBagLayout());
 
-		// static adding of elements to the reference array (for testing
-		// purposes)
-		// referenceArray.add(new ACTIONReference("Minna no Nihongo", 1, "Chie
-		// Imoto", 1, 1, "AWS Publication",
-		// "ACTIONReference", true, 0, null, null));
-		// referenceArray
-		// .add(new FlashCards("Hiragana Flash Cards", "AWS Publication",
-		// "FlashCards", true, 0, null, null));
-		// referenceArray
-		// .add(new Magazine("Programmer's Digest", "AWS Publication", 1, 1,
-		// "Magazine", true, 0, null, null));
-		// referenceArray.add(new VideoCD("Minna no Nihongo Listening
-		// Exercises", 1250, "AWS Publication", "VideoCD", true,
-		// 0, null, null));
+		
+
+//		static adding of elements to the reference array (for testing purposes)
+//		referenceArray.add(new ACTIONReference("Minna no Nihongo", 1, "Chie Imoto", 1, 1, "AWS Publication",
+//				"ACTIONReference", true, 0, null, null));
+//		referenceArray
+//				.add(new FlashCards("Hiragana Flash Cards", "AWS Publication", "FlashCards", true, 0, null, null));
+//		referenceArray
+//				.add(new Magazine("Programmer's Digest", "AWS Publication", 1, 1, "Magazine", true, 0, null, null));
+//		referenceArray.add(new VideoCD("Minna no Nihongo Listening Exercises", 1250, "AWS Publication", "VideoCD", true,
+//				0, null, null));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -50,8 +51,8 @@ public class SearchBooks {
 		ButtonGroup group = new ButtonGroup();
 		JRadioButton book;
 		JLabel label1 = new JLabel("Search Book: ");
-
-		// creates module UI
+		
+		//creates module UI
 		JTextArea area = new JTextArea();
 		area.setEditable(true);
 		area.setWrapStyleWord(true);
@@ -59,14 +60,15 @@ public class SearchBooks {
 		area.setPreferredSize(new Dimension(150, 30));
 
 		// on click of submit button
-//		submit.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
+		submit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 //				JDialog d = new JDialog(frame, "Message", true);
 //				d.setSize(300, 250);
 //				d.setLocationRelativeTo(frame);
 //				d.setVisible(true);
-//			}
-//		});
+				new BorrowBook();
+			}
+		});
 
 		// arranges the search bar and search button
 		Box searchBar = Box.createHorizontalBox();
@@ -79,7 +81,6 @@ public class SearchBooks {
 		Box referenceList = Box.createVerticalBox();
 		for (int i = 0; i < referenceArray.size(); i++) {
 			book = new JRadioButton(referenceArray.get(i).getTitle());
-			book.setActionCommand(referenceArray.get(i).getTitle());
 			group.add(book);
 			referenceList.add(book);
 		}
@@ -117,7 +118,6 @@ public class SearchBooks {
 					for (int i = 0; i < referenceArray.size(); i++) {
 						if (referenceArray.get(i).getTitle().equals(titleQuery)) {
 							bookResult = new JRadioButton(referenceArray.get(i).getTitle());
-							bookResult.setActionCommand(referenceArray.get(i).getTitle());
 							groupResult.add(bookResult);
 							referenceResultList.add(bookResult);
 							flag = 1;
@@ -132,7 +132,7 @@ public class SearchBooks {
 						// pop up display message
 						JOptionPane.showMessageDialog(frame, "Item doesn't exist.", "Error", JOptionPane.ERROR_MESSAGE);
 					} else {
-						// shows the result of the search
+						//shows the result of the search
 						referenceList.setVisible(false);
 						referenceResultList.setVisible(true);
 						frame.revalidate();
@@ -142,117 +142,11 @@ public class SearchBooks {
 			}
 		});
 
-		// on click of submit button
-		submit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				
-				if (group.getSelection() == null) {
-					JOptionPane.showMessageDialog(frame, "No Item Selected.", "Error", JOptionPane.ERROR_MESSAGE);
-				} else {
-					String selectedItem = group.getSelection().getActionCommand();
-
-					System.out.println(selectedItem);
-
-					String type = "";
-					boolean isAvailable = true;
-					int allowableDays = 0;
-
-					for (int i = 0; i < referenceArray.size(); i++) {
-						if (referenceArray.get(i).getTitle().equals(selectedItem)) {
-							type = referenceArray.get(i).getItemType();
-							isAvailable = referenceArray.get(i).getAvailability();
-							allowableDays = referenceArray.get(i).getMaxBorrowDays();
-						}
-					}
-
-					System.out.println("The type is " + type + ". Availability: " + isAvailable
-							+ ". It is available for " + allowableDays);
-
-					Box fields = Box.createVerticalBox();
-
-					// title variables
-					Box forTitle = Box.createHorizontalBox();
-					JLabel lblTitle = new JLabel("Title: ");
-					JLabel title = new JLabel(selectedItem);
-
-					// item type variables
-					Box forType = Box.createHorizontalBox();
-					JLabel lblType = new JLabel("Item Type: " + type);
-
-					// borrower info variables
-					Box forBorrower = Box.createHorizontalBox();
-					JLabel lblBorrower = new JLabel("Borrower Name: ");
-					JTextField borrower = new JTextField("");
-
-					// availability variables
-					Box forAvailability = Box.createHorizontalBox();
-					JLabel lblAvailability = new JLabel("Availability: " + isAvailable);
-
-					// return date variables
-					Box forReturnDate = Box.createHorizontalBox();
-					JLabel lblReturnDate = new JLabel("Date to Return: ");
-					JTextField returnDate = new JTextField("");
-
-					// action variables
-					Box forAction = Box.createHorizontalBox();
-					JButton confirm = new JButton("Confirm");
-
-					// main dialog box creation
-					JDialog d = new JDialog(frame, "Message");
-					d.pack();
-					d.setSize(300, 250);
-					d.setLocationRelativeTo(frame);
-					d.setVisible(true);
-
-					// fields for title
-					forTitle.add(lblTitle);
-					forTitle.add(title);
-
-					// fields for type
-					forType.add(lblType);
-
-					// fields for borrower
-					forBorrower.add(lblBorrower);
-					forBorrower.add(borrower);
-
-					// fields for availability
-					forAvailability.add(lblAvailability);
-
-					// fields for return date
-					forReturnDate.add(lblReturnDate);
-					forReturnDate.add(returnDate);
-
-					// action field
-					forAction.add(confirm);
-
-					// arrange fields
-					fields.add(forTitle);
-					fields.add(forType);
-					fields.add(forBorrower);
-					fields.add(forAvailability);
-					fields.add(forReturnDate);
-					fields.add(forAction);
-
-					// put fields in the dialog box
-					d.add(fields);
-
-					// on click of confirm button
-					confirm.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-
-						}
-					});
-					group.clearSelection();
-				}
-			}
-		});
-
 		// on click of add button
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Box fields = Box.createVerticalBox();
-
+				
 				// title variables
 				Box forTitle = Box.createHorizontalBox();
 				JLabel lblTitle = new JLabel("Title: ");
@@ -298,59 +192,62 @@ public class SearchBooks {
 				// put fields in the dialog box
 				d.add(fields);
 				d.revalidate();
-
-				// on click of Add button
+				
+				//on click of Add button
 				add.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						String type = comboTypes.getSelectedItem().toString();
-
-						// determines selected item type
+						
+						//determines selected item type
 						switch (type) {
 						case "ACTION Reference":
-							// adds new material to the array
-							referenceArray.add(new ACTIONReference(refTitle.getText(), 1, "Chie Imoto", 1, 1,
-									"AWS Publication", "ACTIONReference", true, 0, null, null));
+							//adds new material to the array
+							referenceArray.add(new ACTIONReference(refTitle.getText(), 1, "Chie Imoto", 1, 1, "AWS Publication", "ACTIONReference", true, 0, null, null));
 							JOptionPane.showMessageDialog(d, "New Action Reference Added.");
 							break;
 						case "Video CD":
-							// adds new material to the array
-							referenceArray.add(new VideoCD(refTitle.getText(), 1250, "AWS Publication", "VideoCD", true,
-									0, null, null));
+							//adds new material to the array
+							referenceArray.add(new VideoCD(refTitle.getText(), 1250, "AWS Publication", "VideoCD", true, 0, null, null));
 							JOptionPane.showMessageDialog(d, "New Video CD Added.");
 							break;
 						case "Flash Cards":
-							// adds new material to the array
-							referenceArray.add(new FlashCards(refTitle.getText(), "AWS Publication", "FlashCards", true,
-									0, null, null));
+							//adds new material to the array
+							referenceArray.add(new FlashCards(refTitle.getText(), "AWS Publication", "FlashCards", true, 0, null, null));
 							JOptionPane.showMessageDialog(d, "New Flash Card Added.");
 							break;
 						case "Magazine":
-							// adds new material to the array
-							referenceArray.add(new Magazine(refTitle.getText(), "AWS Publication", 1, 1, "Magazine",
-									true, 0, null, null));
+							//adds new material to the array
+							referenceArray.add(new Magazine(refTitle.getText(), "AWS Publication", 1, 1, "Magazine", true, 0, null, null));
 							JOptionPane.showMessageDialog(d, "New Magazine Added.");
 							break;
 						case "Other Materials":
-							// adds new material to the array
-							referenceArray.add(new OtherMaterials(refTitle.getText(), "AWS Publication", 1,
-									"OtherMaterials", true, 0, null, null));
+							//adds new material to the array
+							referenceArray.add(new OtherMaterials(refTitle.getText(), "AWS Publication", 1, "OtherMaterials", true, 0, null, null));
 							JOptionPane.showMessageDialog(d, "New Material Added.");
 							break;
 						}
-
-						// System.out.println(referenceArray.size());
-
-						// adds the new material to the button group
+						
+						//System.out.println(referenceArray.size());
+						
+						//adds the new material to the button group
+						
+						
 						JRadioButton newBook;
 						newBook = new JRadioButton(referenceArray.get(referenceArray.size() - 1).getTitle());
-						newBook.setActionCommand(referenceArray.get(referenceArray.size() - 1).getTitle());
 						group.add(newBook);
+						
+						employeeCbox = new JComboBox<String>();
+						for(int i = 0; i < employee.size(); i++) {
+							employeeCbox.addItem(employee.get(i).getName());
+						}
+						
+//						referenceList.add(employeeCbox);
 						referenceList.add(newBook);
 						referenceList.revalidate();
 						referenceList.repaint();
 						frame.add(referenceList);
 						frame.revalidate();
-						frame.repaint();
+						frame.repaint();						
 					}
 				});
 			}
