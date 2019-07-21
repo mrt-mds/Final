@@ -22,99 +22,102 @@ import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
 import pkg.employee.SearchEmployee;
 
-public class Penalty extends SearchEmployee{
-	
-			public static void main(String[] args) {
+public class Penalty extends SearchEmployee {
 
-				new Penalty();
-			}
+    public static void main(String[] args) {
 
-		public Penalty() {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					JFrame penaltyWindow = new JFrame("Penalty View");
-					penaltyWindow.setPreferredSize(new Dimension(640,424));
-					penaltyWindow.setBounds(500, 200, 300, 300);
-					penaltyWindow.pack();
-					penaltyWindow.setLocationRelativeTo(null);
-					penaltyWindow.getContentPane().setBackground(new java.awt.Color(245,245,245));
-			
+        new Penalty();
+    }
+
+    public Penalty() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame penaltyWindow = new JFrame("Penalty View");
+                penaltyWindow.setPreferredSize(new Dimension(640, 424));
+                penaltyWindow.setBounds(500, 200, 300, 300);
+                penaltyWindow.pack();
+                penaltyWindow.setLocationRelativeTo(null);
+                penaltyWindow.getContentPane().setBackground(new java.awt.Color(245, 245, 245));
+
 					//---------init table and scrollpane---------------
-					
-					//column names
-					String[] colNames = {"Employee Number", "Name", "Business Unit", "Total Penalty"};
-					
-					//string convert from employee model [x][y]
-					String[][] empList = new String[employee.size()][4];
-					
-					//loop for emplist array
-					int i;
-					int x = 0;
-					for(x = 0; x < 4; x++){
-						for ( i = 0; i < employee.size(); i++){
-							if(employee.get(i).getTotalPenalty() == 0)
-								i++;
-							else{
-								if (x == 0) //employeenumber
-									empList[i][x] = ""+(employee.get(i).getEmployeeNumber());
-								if (x == 1) //employee name
-									empList[i][x] = ""+(employee.get(i).getName());
-								if (x == 2) //employee bu
-									empList[i][x] = ""+(employee.get(i).getBusinessUnit());
-								if (x == 3) //employee total penalty
-									empList[i][x] = ""+(employee.get(i).getTotalPenalty());
-							}
-						}
-					}
-					//table init
-					JTable penaltyTable = new JTable(empList,colNames);
-					JScrollPane tblContainer = new JScrollPane(penaltyTable); 
-					tblContainer.setPreferredSize(new Dimension(480, 256));
-					penaltyTable.setVisible(true);
-					
-									
+                //column names
+                String[] colNames = {"Employee Number", "Name", "Business Unit", "Total Penalty"};
+
+                //string convert from employee model [x][y]
+                String[][] empList = new String[employee.size()][4];
+
+                //loop for emplist array
+                int i;
+                int x = 0;
+                for (x = 0; x < 4; x++) {
+                    for (i = 0; i < employee.size(); i++) {
+                        if (employee.get(i).getTotalPenalty() == 0) {
+                            i++;
+                        } else {
+                            if (x == 0) //employeenumber
+                            {
+                                empList[i][x] = "" + (employee.get(i).getEmployeeNumber());
+                            }
+                            if (x == 1) //employee name
+                            {
+                                empList[i][x] = "" + (employee.get(i).getName());
+                            }
+                            if (x == 2) //employee bu
+                            {
+                                empList[i][x] = "" + (employee.get(i).getBusinessUnit());
+                            }
+                            if (x == 3) //employee total penalty
+                            {
+                                empList[i][x] = "" + (employee.get(i).getTotalPenalty());
+                            }
+                        }
+                    }
+                }
+                //table init
+                JTable penaltyTable = new JTable(empList, colNames);
+                JScrollPane tblContainer = new JScrollPane(penaltyTable);
+                tblContainer.setPreferredSize(new Dimension(480, 256));
+                penaltyTable.setVisible(true);
+
 					//gbc
-					//penaltyWindow.setBorder(new EmptyBorder(-300, 200, 150, 200));
-					penaltyWindow.setLayout(new GridBagLayout());
-					GridBagConstraints gbc = new GridBagConstraints();
-					gbc.anchor = GridBagConstraints.BASELINE;
-					gbc.weighty = 1;
-					gbc.weightx = 0;
-					gbc.gridx = 1;
-					gbc.gridy = 2;
-					penaltyWindow.add(new JLabel("<html><br><h1><strong>PENALTY LIST</strong></h1></html>"), gbc);
-					gbc.anchor = GridBagConstraints.CENTER;
-					gbc.gridx = 1;
-					penaltyWindow.add(tblContainer,gbc);
-					
-					
-					penaltyWindow.setVisible(true);
-					
-				}
+                //penaltyWindow.setBorder(new EmptyBorder(-300, 200, 150, 200));
+                penaltyWindow.setLayout(new GridBagLayout());
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.anchor = GridBagConstraints.BASELINE;
+                gbc.weighty = 1;
+                gbc.weightx = 0;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                penaltyWindow.add(new JLabel("<html><br><h1><strong>PENALTY LIST</strong></h1></html>"), gbc);
+                gbc.anchor = GridBagConstraints.CENTER;
+                gbc.gridx = 1;
+                penaltyWindow.add(tblContainer, gbc);
 
-			});
-		}
-		
-	/*		
-		private void ShowPenaltyTable() {
+                penaltyWindow.setVisible(true);
+
+            }
+
+        });
+    }
+
+    /*		
+     private void ShowPenaltyTable() {
 			
-			//init table
-			String[] colNames = {"Employee Number", "Name", "Business Unit", "Total Penalty"};
-			String[][] data = { 
-		            { "Kundan Kumar Jha", "4031", "CSE","11" }, 
-		            { "Anand Jha", "6014", "IT", "22313" } 
-		        }; 
-			JTable penaltyTable = new JTable(data,colNames);
-		//	penaltyTable.setBounds(30, 40, 100, 100); 
-			//penaltyTable.setSize(200, 300);
-			penaltyTable.setVisible(true);
+     //init table
+     String[] colNames = {"Employee Number", "Name", "Business Unit", "Total Penalty"};
+     String[][] data = { 
+     { "Kundan Kumar Jha", "4031", "CSE","11" }, 
+     { "Anand Jha", "6014", "IT", "22313" } 
+     }; 
+     JTable penaltyTable = new JTable(data,colNames);
+     //	penaltyTable.setBounds(30, 40, 100, 100); 
+     //penaltyTable.setSize(200, 300);
+     penaltyTable.setVisible(true);
 			
 			
-		} */
+     } */
 }
-
-
 
 //	public static void main(String[] args) {
 //
